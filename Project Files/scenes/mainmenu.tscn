@@ -1,0 +1,137 @@
+[gd_scene load_steps=6 format=3 uid="uid://rs38rfahk7rh"]
+
+[ext_resource type="Script" path="res://scenes/mainmenu.gd" id="1_0sro0"]
+[ext_resource type="FontFile" uid="uid://c2sslxcx6r1eq" path="res://assets/pixel_font.ttf" id="1_amhr7"]
+[ext_resource type="Texture2D" uid="uid://bftfoymexxmpq" path="res://assets/Person Icon.png" id="3_b10xa"]
+[ext_resource type="Texture2D" uid="uid://ertfyjc2ibtr" path="res://assets/Bot Icon.png" id="4_3f77l"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4gd20"]
+bg_color = Color(0.0509804, 0, 0.129412, 1)
+
+[node name="menu" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4gd20")
+script = ExtResource("1_0sro0")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 376.0
+offset_top = 88.0
+offset_right = 776.0
+offset_bottom = 191.0
+pivot_offset = Vector2(200, 50)
+theme_override_fonts/font = ExtResource("1_amhr7")
+theme_override_font_sizes/font_size = 100
+text = "PONG"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 256.0
+offset_right = 672.0
+offset_bottom = 320.0
+theme_override_fonts/font = ExtResource("1_amhr7")
+theme_override_font_sizes/font_size = 20
+text = "PLAY"
+
+[node name="QuitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 416.0
+offset_right = 672.0
+offset_bottom = 480.0
+theme_override_fonts/font = ExtResource("1_amhr7")
+theme_override_font_sizes/font_size = 20
+text = "QUIT"
+
+[node name="SetButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 336.0
+offset_right = 672.0
+offset_bottom = 400.0
+theme_override_fonts/font = ExtResource("1_amhr7")
+theme_override_font_sizes/font_size = 20
+text = "SETTINGS"
+
+[node name="AIButton" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 368.0
+offset_top = 336.0
+offset_right = 560.0
+offset_bottom = 400.0
+theme_override_fonts/font = ExtResource("1_amhr7")
+theme_override_font_sizes/font_size = 20
+text = "VS BOT"
+
+[node name="HumanButton" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 592.0
+offset_top = 336.0
+offset_right = 784.0
+offset_bottom = 400.0
+theme_override_fonts/font = ExtResource("1_amhr7")
+theme_override_font_sizes/font_size = 20
+text = "VS PLAYER"
+
+[node name="BackButton" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 480.0
+offset_top = 416.0
+offset_right = 672.0
+offset_bottom = 480.0
+theme_override_fonts/font = ExtResource("1_amhr7")
+theme_override_font_sizes/font_size = 20
+text = "BACK"
+
+[node name="PlayerIcon" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(688, 248)
+scale = Vector2(0.165, 0.165)
+texture = ExtResource("3_b10xa")
+
+[node name="BotIcon" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(464, 248)
+scale = Vector2(0.165, 0.165)
+texture = ExtResource("4_3f77l")
+
+[node name="Volume" type="HSlider" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 472.0
+offset_top = 336.0
+offset_right = 683.0
+offset_bottom = 389.0
+min_value = -30.0
+max_value = 30.0
+
+[node name="VolLabel" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 448.0
+offset_top = 304.0
+offset_right = 704.0
+offset_bottom = 337.0
+theme_override_fonts/font = ExtResource("1_amhr7")
+theme_override_font_sizes/font_size = 25
+text = "VOLUME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="SetButton" to="." method="_on_set_button_pressed"]
+[connection signal="pressed" from="AIButton" to="." method="_on_ai_button_pressed"]
+[connection signal="pressed" from="HumanButton" to="." method="_on_human_button_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="value_changed" from="Volume" to="." method="_on_volume_value_changed"]

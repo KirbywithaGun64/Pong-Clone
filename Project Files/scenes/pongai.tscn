@@ -1,0 +1,256 @@
+[gd_scene load_steps=17 format=3 uid="uid://gg8kdand6rh7"]
+
+[ext_resource type="Texture2D" uid="uid://1rrv0rd6c0v7" path="res://assets/Bg.png" id="1_idkn2"]
+[ext_resource type="Script" path="res://scenes/main.gd" id="2_513hq"]
+[ext_resource type="Script" path="res://scenes/Player.gd" id="3_ju645"]
+[ext_resource type="Script" path="res://scenes/CPU.gd" id="4_47uu8"]
+[ext_resource type="Script" path="res://scenes/Ball.gd" id="5_sf5sx"]
+[ext_resource type="FontFile" uid="uid://c2sslxcx6r1eq" path="res://assets/pixel_font.ttf" id="6_slu4b"]
+[ext_resource type="AudioStream" uid="uid://lg8hwp05mu0d" path="res://assets/sounds/PaddleHit.wav" id="7_prv28"]
+[ext_resource type="AudioStream" uid="uid://ds532xgd3x1k" path="res://assets/sounds/WallHit.wav" id="8_jic7f"]
+[ext_resource type="AudioStream" uid="uid://daa746aq8rfx8" path="res://assets/sounds/GameEnd.wav" id="9_ps6w3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dabuc"]
+size = Vector2(20, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4iioj"]
+size = Vector2(10, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7rs3e"]
+size = Vector2(1152, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iyve0"]
+size = Vector2(1152, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bpbdo"]
+size = Vector2(69, 660)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uy1py"]
+bg_color = Color(0.0509804, 0, 0.129412, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7i0n"]
+bg_color = Color(0.0509804, 0, 0.129412, 1)
+
+[node name="Main" type="Sprite2D"]
+texture_filter = 1
+texture = ExtResource("1_idkn2")
+centered = false
+script = ExtResource("2_513hq")
+
+[node name="Player" type="StaticBody2D" parent="."]
+position = Vector2(50, 324)
+script = ExtResource("3_ju645")
+
+[node name="ColorRect" type="ColorRect" parent="Player"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -60.0
+offset_right = 20.0
+offset_bottom = 60.0
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(10, 0)
+shape = SubResource("RectangleShape2D_dabuc")
+
+[node name="CPU" type="StaticBody2D" parent="."]
+position = Vector2(1082, 324)
+script = ExtResource("4_47uu8")
+
+[node name="ColorRect" type="ColorRect" parent="CPU"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -60.0
+offset_right = 20.0
+offset_bottom = 60.0
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CPU"]
+position = Vector2(10, 0)
+shape = SubResource("RectangleShape2D_dabuc")
+
+[node name="Ball" type="CharacterBody2D" parent="."]
+position = Vector2(576, 324)
+collision_mask = 3
+script = ExtResource("5_sf5sx")
+
+[node name="ColorRect" type="ColorRect" parent="Ball"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("RectangleShape2D_4iioj")
+
+[node name="Borders" type="StaticBody2D" parent="."]
+collision_layer = 2
+
+[node name="Top" type="CollisionShape2D" parent="Borders"]
+position = Vector2(576, -28)
+shape = SubResource("RectangleShape2D_7rs3e")
+
+[node name="Bottom" type="CollisionShape2D" parent="Borders"]
+position = Vector2(576, 676)
+shape = SubResource("RectangleShape2D_iyve0")
+
+[node name="Score Left" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Score Left"]
+position = Vector2(-35, 320)
+shape = SubResource("RectangleShape2D_bpbdo")
+
+[node name="Score Right" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Score Right"]
+position = Vector2(1186.5, 318)
+shape = SubResource("RectangleShape2D_bpbdo")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="PlayerScore" type="Label" parent="HUD"]
+offset_left = 456.0
+offset_top = 10.0
+offset_right = 506.0
+offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("6_slu4b")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CPUScore" type="Label" parent="HUD"]
+offset_left = 648.0
+offset_top = 10.0
+offset_right = 698.0
+offset_bottom = 63.0
+theme_override_fonts/font = ExtResource("6_slu4b")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BeginPanel" type="Panel" parent="HUD"]
+offset_left = 392.0
+offset_top = 96.0
+offset_right = 760.0
+offset_bottom = 128.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_uy1py")
+
+[node name="BeginText" type="Label" parent="HUD/BeginPanel"]
+top_level = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -176.0
+offset_top = -224.0
+offset_right = 176.0
+offset_bottom = -201.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0.0509804, 0, 0.129412, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("6_slu4b")
+text = "First to 3 points wins"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WinPanel" type="Panel" parent="HUD"]
+visible = false
+offset_left = 416.0
+offset_top = 144.0
+offset_right = 726.0
+offset_bottom = 184.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_w7i0n")
+
+[node name="WinText" type="Label" parent="HUD/WinPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -145.0
+offset_top = -14.0
+offset_right = 155.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 30
+theme_override_fonts/font = ExtResource("6_slu4b")
+theme_override_font_sizes/font_size = 25
+text = "PLAYER WINS!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RetryButton" type="Button" parent="HUD"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -124.0
+offset_right = 80.0
+offset_bottom = -76.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_slu4b")
+text = "RETRY"
+
+[node name="QuitButton" type="Button" parent="HUD"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -60.0
+offset_right = 80.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_slu4b")
+text = "QUIT"
+
+[node name="BallTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="TextTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="PaddleHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_prv28")
+
+[node name="WallHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_jic7f")
+
+[node name="GameEnd" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_ps6w3")
+
+[connection signal="body_entered" from="Score Left" to="." method="_on_score_left_body_entered"]
+[connection signal="body_entered" from="Score Right" to="." method="_on_score_right_body_entered"]
+[connection signal="pressed" from="HUD/RetryButton" to="." method="_on_retry_button_pressed"]
+[connection signal="pressed" from="HUD/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="timeout" from="BallTimer" to="." method="_on_ball_timer_timeout"]
+[connection signal="timeout" from="TextTimer" to="." method="_on_text_timer_timeout"]
